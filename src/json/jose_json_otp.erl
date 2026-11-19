@@ -11,10 +11,10 @@
 %% jose_json callbacks
 %%====================================================================
 
--spec decode(binary()) -> dynamic().
+-spec decode(binary()) -> term().
 decode(Binary) -> json:decode(Binary).
 
--spec encode(dynamic()) -> binary().
+-spec encode(term()) -> binary().
 encode(Term) -> iolist_to_binary(json:encode(Term, fun encoder/2)).
 
 %%%-------------------------------------------------------------------
@@ -23,11 +23,11 @@ encode(Term) -> iolist_to_binary(json:encode(Term, fun encoder/2)).
 
 %% @private
 -compile({inline, [dynamic_cast/1]}).
--spec dynamic_cast(term()) -> dynamic().
+-spec dynamic_cast(term()) -> term().
 dynamic_cast(X) -> X.
 
 %% @private
--spec encoder(dynamic(), json:encoder()) -> iodata().
+-spec encoder(term(), json:encoder()) -> iodata().
 encoder(List, Encoder) when is_list(List) ->
     json:encode_list(List, Encoder);
 encoder(Map, Encoder) when is_map(Map) ->
